@@ -15,7 +15,7 @@ variables:
 steps:
 - task: Maven@3
   inputs:
-    mavenPomFile: helloworld/pom.xml
+    mavenPomFile: pom.xml
     mavenOptions: -Xmx3072m
     javaHomeOption: JDKVersion
     jdkVersionOption: 1.11
