@@ -10,7 +10,7 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  azureSubscription: ecanarys7@outlook.com
+  azureSubscription: Visual Studio Enterprise
   
 steps:
 - task: Maven@3
@@ -39,7 +39,7 @@ steps:
 - task: AzureWebApp@1
   displayName: Azure Web App Deploy
   inputs:
-    azureSubscription: $ecanarys7@outlook.com
+    azureSubscription: $(azureSubscription) 
     appType: webAppLinux
-    appName: webapp
+    appName: azurejavademoapp
     package: $(build.artifactstagingdirectory)/**/*.war
