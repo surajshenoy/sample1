@@ -10,7 +10,7 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  azureSubscription: Visual Studio Enterprise
+  azureSubscription: test
   
 steps:
 - task: Maven@3
