@@ -9,14 +9,37 @@ trigger:
 pool:
   vmImage: 'Ubuntu-16.04'
 
+variables:
+  azureSubscription: https://portal.azure.com/ecanarys7@outlook.com
+  
 steps:
 - task: Maven@3
   inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.11'
-    jdkArchitectureOption: 'x64'
+    mavenPomFile: helloworld/pom.xml
+    mavenOptions: -Xmx3072m
+    javaHomeOption: JDKVersion
+    jdkVersionOption: 1.11
+    jdkArchitectureOption: x64
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    goals: package
+    
+- task: CopyFiles@2
+  displayName: Copy Files
+  inputs:
+    SourceFolder: $(system.defaultworkingdirectory)
+    Contents: '**'
+    TargetFolder: $(build.artifactstagingdirectory)
+    
+- task: PublishBuildArtifacts@1
+  displayName: Publish Artifact
+  inputs:
+    PathtoPublish: $(build.artifactstagingdirectory)
+
+- task: AzureWebApp@1
+  displayName: Azure Web App Deploy
+  inputs:
+    azureSubscription: $(https://portal.azure.com/ecanarys7@outlook.com)
+    appType: webAppLinux
+    appName: webapp
+    package: $(build.artifactstagingdirectory)/**/*.war
